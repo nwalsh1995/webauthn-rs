@@ -7,6 +7,7 @@ use crate::error::WebauthnCError;
 use crate::BASE64_ENGINE;
 use base64::Engine;
 use openssl::{bn, ec, hash, pkey, rand, sign};
+use serde::{Deserialize, Serialize};
 use serde_cbor_2::value::Value;
 use std::collections::BTreeMap;
 use std::collections::HashMap;
@@ -21,6 +22,7 @@ use webauthn_rs_proto::{
     RegisterPublicKeyCredential, RegistrationExtensionsClientOutputs, UserVerificationPolicy,
 };
 
+#[derive(Serialize, Deserialize)]
 pub struct SoftPasskey {
     tokens: HashMap<Vec<u8>, Vec<u8>>,
     counter: u32,
