@@ -463,22 +463,23 @@ impl U2FToken for SoftPasskey {
             return Err(WebauthnCError::NotSupported);
         }
 
-        let cred = allowed_credentials
-            .iter()
-            .filter_map(|ac| {
-                self.tokens
-                    .get(ac.id.as_ref())
-                    .map(|v| (ac.id.clone().into(), v.clone()))
-            })
-            .take(1)
-            .next();
+        // Conditional mediation does not require allowed credentials.
+        // let cred = allowed_credentials
+        //     .iter()
+        //     .filter_map(|ac| {
+        //         self.tokens
+        //             .get(ac.id.as_ref())
+        //             .map(|v| (ac.id.clone().into(), v.clone()))
+        //     })
+        //     .take(1)
+        //     .next();
 
-        let (key_handle, pkder) = if let Some((key_handle, pkder)) = cred {
-            (key_handle, pkder)
-        } else {
-            error!("Credential ID not found");
-            return Err(WebauthnCError::Internal);
-        };
+        // let (key_handle, pkder) = if let Some((key_handle, pkder)) = cred {
+        //     (key_handle, pkder)
+        // } else {
+        //     error!("Credential ID not found");
+        //     return Err(WebauthnCError::Internal);
+        // };
 
         debug!("Using -> {:?}", key_handle);
 
